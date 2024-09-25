@@ -9,6 +9,8 @@ import Form from './components/DynamicFormComponent/FormComponent'
  import UserList from './components/FetchDataHoc/UserList';
  import WithDataFetch from './components/FetchDataHoc/withDataFetching';
 import MouseMoveDisplay from './components/MouseTrackerComponent/DisplayMouseMove';
+import ShopingCart from './components/ShoppingCardComponent/ShopingCart';
+import CartItem from './components/ShoppingCardComponent/CartItem';
 
 const AuthorisedDashboard = withAuthorization(Dashboard, 'admin');
 
@@ -49,6 +51,18 @@ const user ={
   },
 ];
 
+// task no. 6
+
+const [cartItems, setCartItems] = useState([
+  {id:1, name:'Mobile', price:25000},
+  {id:2, name:'Laptop', price:60000},
+  {id:3, name:'Tablet', price:20000}
+]);
+
+const removeItem = (id) => {
+setCartItems(cartItems.filter(item => item.id !== id));
+};
+
 
   return (
     <div>
@@ -83,9 +97,22 @@ const user ={
       <UserListWithData />
     </div>
     <br/>
-    <br/>
     <div>
       <MouseMoveDisplay/>
+    </div>
+    <hr/>
+    {/* taskno 6 */}
+    <div>
+      <ShopingCart title='Shopping Cart'>
+        {cartItems.map(item => (
+          <CartItem 
+          key={item.id}
+          name={item.name}
+          price={item.price}
+          onRemove={() => removeItem(item.id)}
+          />
+        ))}
+      </ShopingCart>
     </div>
     </div>
   );
